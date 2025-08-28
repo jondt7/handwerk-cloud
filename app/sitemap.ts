@@ -5,7 +5,15 @@ import {getPostSlugs} from '@/lib/posts';
 import {getNewsSlugs} from '@/lib/news';
 
 function getBaseUrl() {
-  return (process.env.NEXT_PUBLIC_SITE_URL || 'http://localhost:3000').replace(/\/$/, '');
+  const env =
+    process.env.NEXT_PUBLIC_SITE_URL ||
+    process.env.VERCEL_PROJECT_PRODUCTION_URL ||
+    process.env.VERCEL_URL;
+  if (env) {
+    const withProto = env.startsWith('http') ? env : `https://${env}`;
+    return withProto.replace(/\/$/, '');
+  }
+  return 'http://localhost:3000';
 }
 
 export default async function sitemap(): Promise<MetadataRoute.Sitemap> {

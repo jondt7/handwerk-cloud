@@ -1,5 +1,6 @@
 import {getLocale} from 'next-intl/server';
 import {getAllNews, type Locale as NewsLocale} from '@/lib/news';
+import { headers } from 'next/headers';
 import { NewsCard } from '@/components/news-card';
 import { NewsSidebar } from '@/components/news-sidebar';
 
@@ -64,6 +65,21 @@ export default async function NewsIndex({
 
   return (
     <section className="container py-12">
+      {/* JSON-LD ItemList */}
+      {(() => {
+        const h = headers();
+        const proto = h.get('x-forwarded-proto') || 'https';
+        const host = h.get('host') || 'localhost:3000';
+        const base = `${proto}://${host}`.replace(/\/$/, '');
+        const items = slice.map((p, i) => ({
+          '@type': 'ListItem',
+          position: i + 1,
+          url: `${base}/${locale}/news/${p.meta.slug}`,
+          name: p.meta.title
+        }));
+        const ld = { '@context': 'https://schema.org', '@type': 'ItemList', itemListElement: items };
+        return <script type="application/ld+json" dangerouslySetInnerHTML={{__html: JSON.stringify(ld)}} />;
+      })()}
       {/* Hero */}
       <header className="mb-6">
         <h1 className="text-3xl font-semibold tracking-tight text-balance">{labels.title}</h1>

@@ -1,6 +1,7 @@
 // app/[locale]/page.tsx
 import {getTranslations, getLocale} from 'next-intl/server';
 import Link from 'next/link';
+import { headers } from 'next/headers';
 import {getAllPosts, type PostMeta} from '@/lib/posts';
 import {getAllNews, type Locale as NewsLocale} from '@/lib/news';
 import type {Locale} from '@/lib/posts';
@@ -32,6 +33,25 @@ export default async function HomePage() {
 
   return (
     <>
+      {(() => {
+        const h = headers();
+        const proto = h.get('x-forwarded-proto') || 'https';
+        const host = h.get('host') || 'localhost:3000';
+        const base = `${proto}://${host}`.replace(/\/$/, '');
+        const target = `${base}/${locale}/news?q={search_term_string}`;
+        const ld = {
+          '@context': 'https://schema.org',
+          '@type': 'WebSite',
+          name: 'Handwerk.Cloud',
+          url: `${base}/${locale}`,
+          potentialAction: {
+            '@type': 'SearchAction',
+            target,
+            'query-input': 'required name=search_term_string'
+          }
+        };
+        return <script type="application/ld+json" dangerouslySetInnerHTML={{__html: JSON.stringify(ld)}} />;
+      })()}
       {/* Hero */}
       <section className="relative py-20">
         {/* subtle radial background */}
