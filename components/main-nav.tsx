@@ -36,7 +36,7 @@ export function MainNav({
     );
 
   return (
-    <div className="flex items-center gap-2" ref={menuRef}>
+    <div className="hidden md:flex items-center gap-2" ref={menuRef}>
       <Link href={`/${locale}`} className={itemClass(isActive(`/${locale}`))}>
         {labels.home}
       </Link>

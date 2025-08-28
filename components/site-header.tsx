@@ -2,6 +2,7 @@ import Link from 'next/link';
 import {getTranslations, getLocale} from 'next-intl/server';
 import { LangSwitcher } from '@/components/lang-switcher';
 import { MainNav } from '@/components/main-nav';
+import { MobileNav } from '@/components/mobile-nav';
 
 export async function SiteHeader() {
   const t = await getTranslations('common');
@@ -14,6 +15,15 @@ export async function SiteHeader() {
           {t('brand')}
         </Link>
         <nav className="flex items-center gap-4">
+          <MobileNav
+            locale={locale}
+            labels={{
+              home: t('nav.home'),
+              news: t('nav.news'),
+              pricing: t('nav.pricing'),
+              blog: t('nav.blog')
+            }}
+          />
           <MainNav
             locale={locale}
             labels={{
@@ -24,8 +34,10 @@ export async function SiteHeader() {
               allPosts: locale === 'de' ? 'Alle Beiträge' : 'All posts'
             }}
           />
-          <div className="h-5 w-px bg-neutral-200" aria-hidden></div>
-          <LangSwitcher />
+          <div className="h-5 w-px bg-neutral-200 hidden md:block" aria-hidden></div>
+          <div className="hidden md:block">
+            <LangSwitcher />
+          </div>
         </nav>
       </div>
     </header>
