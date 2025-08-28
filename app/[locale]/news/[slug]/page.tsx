@@ -144,13 +144,30 @@ export default async function NewsItem({
         {(item.meta.tags && item.meta.tags.length > 0) || (item.meta.topics && item.meta.topics.length > 0) || item.meta.country ? (
           <div className="mt-10 flex flex-wrap gap-2">
             {item.meta.country ? (
-              <span className="rounded-full bg-neutral-50 ring-1 ring-neutral-200 px-3 py-1 text-xs text-neutral-700">{item.meta.country}</span>
+              <a
+                href={`/${locale}/regions/${encodeURIComponent(item.meta.country)}`}
+                className="rounded-full bg-neutral-50 ring-1 ring-neutral-200 px-3 py-1 text-xs text-neutral-700 hover:bg-neutral-100 hover:ring-neutral-300"
+              >
+                {item.meta.country}
+              </a>
             ) : null}
-            {(item.meta.topics || []).map((tag) => (
-              <span key={tag} className="rounded-full bg-neutral-50 ring-1 ring-neutral-200 px-3 py-1 text-xs text-neutral-700">{tag}</span>
+            {(item.meta.topics || []).map((t) => (
+              <a
+                key={`top-${t}`}
+                href={`/${locale}/topics/${encodeURIComponent(t)}`}
+                className="rounded-full bg-neutral-50 ring-1 ring-neutral-200 px-3 py-1 text-xs text-neutral-700 hover:bg-neutral-100 hover:ring-neutral-300"
+              >
+                {t}
+              </a>
             ))}
-            {(item.meta.tags || []).map((tag) => (
-              <span key={tag} className="rounded-full bg-neutral-50 ring-1 ring-neutral-200 px-3 py-1 text-xs text-neutral-700">{tag}</span>
+            {(item.meta.tags || []).map((t) => (
+              <a
+                key={`tag-${t}`}
+                href={`/${locale}/tags/${encodeURIComponent(t)}`}
+                className="rounded-full bg-neutral-50 ring-1 ring-neutral-200 px-3 py-1 text-xs text-neutral-700 hover:bg-neutral-100 hover:ring-neutral-300"
+              >
+                #{t}
+              </a>
             ))}
           </div>
         ) : null}
