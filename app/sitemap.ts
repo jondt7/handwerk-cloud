@@ -56,8 +56,8 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
     });
 
     // Blog posts
-  const slugs = await getPostSlugs(locale as Locale);
-  for (const slug of slugs) {
+    const slugs = await getPostSlugs(locale as Locale);
+    for (const slug of slugs) {
       urls.push({
         url: `${base}/${locale}/blog/${slug}`,
         lastModified: new Date(),
@@ -71,7 +71,6 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
         }
       });
     }
-  }
 
     // News items
     const nslugs = await getNewsSlugs(locale as Locale);
@@ -89,6 +88,7 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
         }
       });
     }
+  }
 
   return urls;
 }

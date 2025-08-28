@@ -15,13 +15,7 @@ export function generateStaticParams() {
   return locales.map((locale) => ({locale}));
 }
 
-export async function generateMetadata({
-  params
-}: {
-  params: Promise<{locale: string}>;
-}): Promise<Metadata> {
-  const {locale: _raw} = await params;
-
+export async function generateMetadata(): Promise<Metadata> {
   const base = process.env.NEXT_PUBLIC_SITE_URL || 'https://handwerk.cloud';
   const urlBase = base.replace(/\/$/, '');
 
