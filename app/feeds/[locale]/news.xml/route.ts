@@ -1,5 +1,4 @@
 import { NextResponse } from 'next/server';
-import { params } from 'next/headers';
 import { isLocale, type Locale } from '@/i18n/config';
 import { getAllNews } from '@/lib/news';
 
@@ -33,4 +32,3 @@ export async function GET(_req: Request, ctx: { params: Promise<{ locale: string
 
   return new NextResponse(rss, { headers: { 'content-type': 'application/rss+xml; charset=utf-8' } });
 }
-
