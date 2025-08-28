@@ -75,7 +75,7 @@ export default async function NewsItem({
     .slice(0, 4)
     .map((r) => r.x.meta);
 
-  const h = headers();
+  const h = await headers();
   const proto = h.get('x-forwarded-proto') || 'https';
   const host = h.get('host') || 'localhost:3000';
   const base = `${proto}://${host}`.replace(/\/$/, '');

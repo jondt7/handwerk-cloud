@@ -63,23 +63,25 @@ export default async function NewsIndex({
     return `/${locale}/news?${params.toString()}`;
   };
 
+  const h = await headers();
+  const proto = h.get('x-forwarded-proto') || 'https';
+  const host = h.get('host') || 'localhost:3000';
+  const base = `${proto}://${host}`.replace(/\/$/, '');
+  const ld = {
+    '@context': 'https://schema.org',
+    '@type': 'ItemList',
+    itemListElement: slice.map((p, i) => ({
+      '@type': 'ListItem',
+      position: i + 1,
+      url: `${base}/${locale}/news/${p.meta.slug}`,
+      name: p.meta.title
+    }))
+  } as const;
+
   return (
     <section className="container py-12">
       {/* JSON-LD ItemList */}
-      {(() => {
-        const h = headers();
-        const proto = h.get('x-forwarded-proto') || 'https';
-        const host = h.get('host') || 'localhost:3000';
-        const base = `${proto}://${host}`.replace(/\/$/, '');
-        const items = slice.map((p, i) => ({
-          '@type': 'ListItem',
-          position: i + 1,
-          url: `${base}/${locale}/news/${p.meta.slug}`,
-          name: p.meta.title
-        }));
-        const ld = { '@context': 'https://schema.org', '@type': 'ItemList', itemListElement: items };
-        return <script type="application/ld+json" dangerouslySetInnerHTML={{__html: JSON.stringify(ld)}} />;
-      })()}
+      <script type="application/ld+json" dangerouslySetInnerHTML={{__html: JSON.stringify(ld)}} />
       {/* Hero */}
       <header className="mb-6">
         <h1 className="text-3xl font-semibold tracking-tight text-balance">{labels.title}</h1>

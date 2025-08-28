@@ -10,7 +10,7 @@ function xmlEscape(s: string) {
 export const revalidate = 300; // 5 minutes
 
 export async function GET() {
-  const h = headers();
+  const h = await headers();
   const proto = h.get('x-forwarded-proto') || 'https';
   const host = h.get('host') || 'localhost:3000';
   const base = `${proto}://${host}`.replace(/\/$/, '');
