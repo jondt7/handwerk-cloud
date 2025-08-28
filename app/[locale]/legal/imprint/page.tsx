@@ -1,8 +1,7 @@
-import {getTranslations, getLocale} from 'next-intl/server';
+import {getTranslations} from 'next-intl/server';
 
 export default async function ImprintPage() {
   const t = await getTranslations('legal.imprint');
-  const locale = (await getLocale()) as 'de' | 'en';
 
   return (
     <section className="container py-12">

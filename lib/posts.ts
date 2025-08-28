@@ -41,10 +41,20 @@ export async function getPostBySlug(
     const raw = await fs.readFile(filePath, 'utf8');
     const { data, content } = matter(raw);
 
-    const sources: SourceRef[] = Array.isArray(data.sources)
-      ? data.sources
-          .map((s: any) => (typeof s === 'string' ? { url: s } : { name: s?.name, url: s?.url }))
-          .filter((s) => s && typeof s.url === 'string' && s.url.length > 0)
+    const src = (data as unknown as { sources?: unknown }).sources;
+    const sources: SourceRef[] = Array.isArray(src)
+      ? src
+          .map((s: unknown) => {
+            if (typeof s === 'string') return { url: s } as SourceRef;
+            if (s && typeof s === 'object') {
+              const rec = s as { name?: unknown; url?: unknown };
+              const url = typeof rec.url === 'string' ? rec.url : undefined;
+              const name = typeof rec.name === 'string' ? rec.name : undefined;
+              return url ? ({ name, url } satisfies SourceRef) : undefined;
+            }
+            return undefined;
+          })
+          .filter((s): s is SourceRef => Boolean(s && s.url && s.url.length > 0))
       : [];
 
     const meta: PostMeta = {

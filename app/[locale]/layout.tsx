@@ -20,8 +20,7 @@ export async function generateMetadata({
 }: {
   params: Promise<{locale: string}>;
 }): Promise<Metadata> {
-  const {locale: raw} = await params;
-  const locale = isLocale(raw) ? (raw as Locale) : defaultLocale;
+  const {locale: _raw} = await params;
 
   const base = process.env.NEXT_PUBLIC_SITE_URL || 'https://handwerk.cloud';
   const urlBase = base.replace(/\/$/, '');

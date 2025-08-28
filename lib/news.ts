@@ -31,6 +31,22 @@ async function readDirSafe(dir: string): Promise<string[]> {
   try { return await fs.readdir(dir); } catch { return []; }
 }
 
+function parseSources(input: unknown): SourceRef[] {
+  if (!Array.isArray(input)) return [];
+  return input
+    .map((s: unknown) => {
+      if (typeof s === 'string') return { url: s } as SourceRef;
+      if (s && typeof s === 'object') {
+        const rec = s as { name?: unknown; url?: unknown };
+        const url = typeof rec.url === 'string' ? rec.url : undefined;
+        const name = typeof rec.name === 'string' ? rec.name : undefined;
+        return url ? ({ name, url } satisfies SourceRef) : undefined;
+      }
+      return undefined;
+    })
+    .filter((s): s is SourceRef => Boolean(s && s.url && s.url.length > 0));
+}
+
 function slugify(input: string): string {
   return input
     .toLowerCase()
@@ -88,11 +104,7 @@ export async function getNewsBySlug(
       const route = explicit || computeRouteSlug(data.title, data.date, f.replace(/\.mdx?$/, ''));
       if (route !== slug) continue;
 
-      const sources: SourceRef[] = Array.isArray(data.sources)
-        ? data.sources
-            .map((s: any) => (typeof s === 'string' ? { url: s } : { name: s?.name, url: s?.url }))
-            .filter((s) => s && typeof s.url === 'string' && s.url.length > 0)
-        : [];
+      const sources: SourceRef[] = parseSources((data as unknown as { sources?: unknown }).sources);
 
       const meta: NewsMeta = {
         title: data.title ?? route,
@@ -130,11 +142,7 @@ export async function getAllNews(locale: Locale): Promise<Array<{ meta: NewsMeta
       const raw = await fs.readFile(path.join(dir, f), 'utf8');
       const { data, content } = matter(raw);
       const route = (typeof data.slug === 'string' && data.slug) || computeRouteSlug(data.title, data.date, f.replace(/\.mdx?$/, ''));
-      const sources: SourceRef[] = Array.isArray(data.sources)
-        ? data.sources
-            .map((s: any) => (typeof s === 'string' ? { url: s } : { name: s?.name, url: s?.url }))
-            .filter((s) => s && typeof s.url === 'string' && s.url.length > 0)
-        : [];
+      const sources: SourceRef[] = parseSources((data as unknown as { sources?: unknown }).sources);
 
       const meta: NewsMeta = {
         title: data.title ?? route,

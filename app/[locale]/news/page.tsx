@@ -1,5 +1,4 @@
 import {getLocale} from 'next-intl/server';
-import Link from 'next/link';
 import {getAllNews, type Locale as NewsLocale} from '@/lib/news';
 import { NewsCard } from '@/components/news-card';
 import { NewsSidebar } from '@/components/news-sidebar';
@@ -30,7 +29,7 @@ export default async function NewsIndex({
 
   const all = await getAllNews(locale);
 
-  const filtered = all.filter(({meta, content}) => {
+  const filtered = all.filter(({meta}) => {
     if (days && !withinDays(meta.date, days)) return false;
     if (topic && !(meta.topics || []).includes(topic)) return false;
     if (country && meta.country !== country) return false;
@@ -54,11 +53,12 @@ export default async function NewsIndex({
     : { title: 'News', tagline: 'Latest construction & trades headlines — curated and concise.', none: 'No news found.', allPosts: 'All news', source: 'Source', filters: 'Filters', clear: 'Reset', latest: 'Latest news' };
 
   const makeUrl = (patch: Partial<SP>) => {
-    const params = new URLSearchParams({ ...sp } as any);
-    for (const [k, v] of Object.entries(patch)) {
-      if (v === undefined || v === '') params.delete(k);
-      else params.set(k, String(v));
-    }
+    const params = new URLSearchParams();
+    const current = sp as SP;
+    (['q','topic','country','days','page'] as const).forEach((key) => {
+      const val = (key in patch ? patch[key] : current[key]) || '';
+      if (val) params.set(key, String(val));
+    });
     return `/${locale}/news?${params.toString()}`;
   };
 
