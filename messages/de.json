@@ -4,6 +4,7 @@
       "nav": {
         "home": "Start",
         "pricing": "Preise",
+        "news": "News",
         "blog": "Blog"
       },
       "cta": {
@@ -24,6 +25,62 @@
       "value2_text": "Klarer Aufbau im Stil von institutionellen Websites.",
       "value3_title": "Schneller Start",
       "value3_text": "Bereit für Vercel-Deployment und Wachstum."
+    },
+    "pricing": {
+      "title": "Aktuell kostenlos",
+      "subtitle": "Handwerk.Cloud befindet sich im Aufbau und ist derzeit frei zugänglich. Eine Pro-Version ist in 12–24 Monaten geplant.",
+      "free_badge": "Kostenlos",
+      "free_title": "Aktuell kostenlos für alle",
+      "free_bullets": [
+        "Tägliche Branchennews und globale Bauprojekte",
+        "Kurze, neutrale Zusammenfassungen (DE/EN)",
+        "Responsives Layout, schnelle Performance"
+      ],
+      "roadmap_title": "Geplante Pro-Funktionen (12–24 Monate)",
+      "roadmap_bullets": [
+        "Frühzugang zu Projekten & benutzerdefinierte Alerts",
+        "Filter nach Region/Gewerk, gespeicherte Suchen",
+        "Export/API & vertiefende Analysen"
+      ],
+      "disclaimer": "Hinweis: Zeitplan unverbindlich; Funktionen können sich ändern."
+    },
+    "legal": {
+      "imprint": {
+        "title": "Impressum",
+        "subtitle": "Angaben gemäß § 5 TMG",
+        "companyTitle": "Anbieter",
+        "contactTitle": "Kontakt",
+        "liabilityTitle": "Haftungshinweis",
+        "liabilityText": "Trotz sorgfältiger inhaltlicher Kontrolle übernehmen wir keine Haftung für die Inhalte externer Links. Für den Inhalt der verlinkten Seiten sind ausschließlich deren Betreiber verantwortlich."
+      },
+      "privacy": {
+        "title": "Datenschutzerklärung",
+        "subtitle": "Informationen gemäß Art. 13/14 DSGVO",
+        "controllerTitle": "Verantwortlicher",
+        "controllerText": "Bitte tragen Sie hier Name/Firma und Kontaktdaten des Verantwortlichen ein.",
+        "dataTitle": "Verarbeitete Daten & Zwecke",
+        "dataText": "Diese Seite nutzt technisch notwendige Daten. Weitere Tools (Analytics/Newsletter) werden bei Einsatz hier erläutert.",
+        "rightsTitle": "Ihre Rechte",
+        "rightsText": "Sie haben das Recht auf Auskunft, Berichtigung, Löschung, Einschränkung der Verarbeitung sowie Widerspruch."
+      }
+    },
+    "post": {
+      "ai_summary": "KI-Zusammenfassung",
+      "sources": "Quellen",
+      "published": "Veröffentlicht",
+      "updated": "Aktualisiert",
+      "read_time": "{minutes} Min. Lesezeit"
+    },
+    "news": {
+      "title": "News",
+      "tagline": "Aktuelle Meldungen aus Bau & Handwerk – kuratiert und neutral zusammengefasst.",
+      "none": "Keine Meldungen gefunden.",
+      "filters": "Filter",
+      "clear": "Zurücksetzen",
+      "latest": "Neueste Meldungen",
+      "popular_topics": "Beliebte Themen",
+      "top_sources": "Top Quellen",
+      "subscribe": "Newsletter abonnieren"
     }
   }
   

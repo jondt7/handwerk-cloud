@@ -1,20 +1,30 @@
 import Link from 'next/link';
-import { useTranslations } from 'next-intl';
-import { LangSwitcher } from './lang-switcher';
+import {getTranslations, getLocale} from 'next-intl/server';
+import { LangSwitcher } from '@/components/lang-switcher';
+import { MainNav } from '@/components/main-nav';
 
-export function SiteHeader() {
-  const t = useTranslations('common');
+export async function SiteHeader() {
+  const t = await getTranslations('common');
+  const locale = (await getLocale()) as 'de' | 'en';
 
   return (
-    <header className="border-b">
-      <div className="max-w-6xl mx-auto px-6 md:px-10 lg:px-16 h-16 flex items-center justify-between">
-        <Link href="/" className="font-semibold tracking-tight">
+    <header className="sticky top-0 z-40 border-b bg-white/70 backdrop-blur supports-[backdrop-filter]:bg-white/60">
+      <div className="container h-16 flex items-center justify-between">
+        <Link href={`/${locale}`} className="font-semibold tracking-tight hover:opacity-80">
           {t('brand')}
         </Link>
-        <nav className="flex items-center gap-6 text-sm text-neutral-700">
-          <Link href="/de" className="hover:text-neutral-900">{t('nav.home')}</Link>
-          <Link href="/de/pricing" className="hover:text-neutral-900">{t('nav.pricing')}</Link>
-          <Link href="/de/blog" className="hover:text-neutral-900">{t('nav.blog')}</Link>
+        <nav className="flex items-center gap-4">
+          <MainNav
+            locale={locale}
+            labels={{
+              home: t('nav.home'),
+              pricing: t('nav.pricing'),
+              news: t('nav.news'),
+              blog: t('nav.blog'),
+              allPosts: locale === 'de' ? 'Alle Beiträge' : 'All posts'
+            }}
+          />
+          <div className="h-5 w-px bg-neutral-200" aria-hidden></div>
           <LangSwitcher />
         </nav>
       </div>

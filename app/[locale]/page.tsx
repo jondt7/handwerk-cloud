@@ -1,42 +1,110 @@
-import { useTranslations } from 'next-intl';
+// app/[locale]/page.tsx
+import {getTranslations, getLocale} from 'next-intl/server';
 import Link from 'next/link';
+import {getAllPosts, type PostMeta} from '@/lib/posts';
+import type {Locale} from '@/lib/posts';
 
-export default function HomePage() {
-  const t = useTranslations('home');
+function formatDate(iso: string, locale: Locale) {
+  try {
+    return new Date(iso).toLocaleDateString(
+      locale === 'de' ? 'de-DE' : 'en-US',
+      {year: 'numeric', month: 'short', day: '2-digit'}
+    );
+  } catch {
+    return iso;
+  }
+}
+
+export default async function HomePage() {
+  const [tHome, tCommon, localeRaw] = await Promise.all([
+    getTranslations('home'),
+    getTranslations('common'),
+    getLocale()
+  ]);
+  const locale = localeRaw as Locale;
+
+  const latestPosts: Array<{meta: PostMeta}> = (await getAllPosts(locale)).slice(0, 3);
+
+  const latestLabel = locale === 'de' ? 'Neueste Beiträge' : 'Latest posts';
+  const viewAllLabel = locale === 'de' ? 'Alle Beiträge' : 'View all';
 
   return (
-    <section className="px-6 py-16 md:px-10 lg:px-16 max-w-6xl mx-auto">
-      <div className="grid gap-8 md:grid-cols-2 items-center">
-        <header>
-          <h1 className="text-4xl md:text-5xl font-semibold tracking-tight">{t('headline')}</h1>
-          <p className="mt-4 text-lg text-neutral-600">{t('tagline')}</p>
-          <div className="mt-8 flex gap-4">
-            <Link href="#" className="inline-flex items-center rounded-xl px-5 py-3 border border-neutral-900">
-              {/* secondary CTA */}
-              {t('value2_title')}
-            </Link>
-            <Link href="#" className="inline-flex items-center rounded-xl px-5 py-3 bg-neutral-900 text-white">
-              {/* primary CTA */}
-              {t('value3_title')}
-            </Link>
-          </div>
-        </header>
+    <>
+      {/* Hero */}
+      <section className="relative py-20">
+        {/* subtle radial background */}
+        <div className="absolute inset-0 -z-10 bg-[radial-gradient(ellipse_at_top,rgba(0,0,0,0.04),transparent_60%)]" aria-hidden />
+        <div className="container grid gap-12 md:grid-cols-2 items-center">
+          <header>
+            <h1 className="text-4xl md:text-5xl font-semibold tracking-tight text-balance">
+              {tHome('headline')}
+            </h1>
+            <p className="mt-5 text-lg text-neutral-600">
+              {tHome('tagline')}
+            </p>
+            <div className="mt-8 flex gap-4">
+              <Link href={`/${locale}/blog`} className="btn btn-primary">
+                {tCommon('cta.primary')}
+              </Link>
+              <Link href={`/${locale}/pricing`} className="btn btn-secondary">
+                {tCommon('cta.secondary')}
+              </Link>
+            </div>
+          </header>
 
-        <ul className="grid gap-4">
-          <li className="rounded-2xl border p-6">
-            <h3 className="font-medium">{t('value1_title')}</h3>
-            <p className="text-neutral-600 mt-1">{t('value1_text')}</p>
-          </li>
-          <li className="rounded-2xl border p-6">
-            <h3 className="font-medium">{t('value2_title')}</h3>
-            <p className="text-neutral-600 mt-1">{t('value2_text')}</p>
-          </li>
-          <li className="rounded-2xl border p-6">
-            <h3 className="font-medium">{t('value3_title')}</h3>
-            <p className="text-neutral-600 mt-1">{t('value3_text')}</p>
-          </li>
-        </ul>
-      </div>
-    </section>
+          {/* Value Props */}
+          <ul className="grid gap-4 list-none">
+            <li className="ring-1 ring-neutral-200 rounded-xl p-6 hover:bg-neutral-50 hover:shadow-sm transition">
+              <h3 className="font-medium">{tHome('value1_title')}</h3>
+              <p className="text-neutral-600 mt-1">{tHome('value1_text')}</p>
+            </li>
+            <li className="ring-1 ring-neutral-200 rounded-xl p-6 hover:bg-neutral-50 hover:shadow-sm transition">
+              <h3 className="font-medium">{tHome('value2_title')}</h3>
+              <p className="text-neutral-600 mt-1">{tHome('value2_text')}</p>
+            </li>
+            <li className="ring-1 ring-neutral-200 rounded-xl p-6 hover:bg-neutral-50 hover:shadow-sm transition">
+              <h3 className="font-medium">{tHome('value3_title')}</h3>
+              <p className="text-neutral-600 mt-1">{tHome('value3_text')}</p>
+            </li>
+          </ul>
+        </div>
+      </section>
+
+      {/* Latest posts */}
+      <section className="container pb-20">
+        <div className="flex items-end justify-between mb-4">
+          <h2 className="text-2xl font-semibold tracking-tight">{latestLabel}</h2>
+          <Link href={`/${locale}/blog`} className="text-sm text-neutral-600 hover:text-neutral-900">
+            {viewAllLabel}
+          </Link>
+        </div>
+
+        {latestPosts.length === 0 ? (
+          <p className="text-neutral-600">
+            {locale === 'de' ? 'Noch keine Beiträge vorhanden.' : 'No posts yet.'}
+          </p>
+        ) : (
+          <ul className="grid md:grid-cols-3 gap-6 list-none">
+            {latestPosts.map(({meta}) => (
+              <li key={meta.slug} className="ring-1 ring-neutral-200 rounded-xl p-6 hover:shadow-sm hover:bg-neutral-50 transition group">
+                <article>
+                  <h3 className="text-lg font-medium tracking-tight">
+                    <Link href={`/${locale}/blog/${meta.slug}`} className="hover:underline">
+                      {meta.title}
+                    </Link>
+                  </h3>
+                  {meta.description ? (
+                    <p className="text-neutral-600 mt-1 clamp-2">{meta.description}</p>
+                  ) : null}
+                  <div className="mt-3 text-sm text-neutral-500">
+                    <time dateTime={meta.date}>{formatDate(meta.date, locale)}</time>
+                  </div>
+                </article>
+              </li>
+            ))}
+          </ul>
+        )}
+      </section>
+    </>
   );
 }

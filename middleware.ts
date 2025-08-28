@@ -1,27 +1,14 @@
-import { NextResponse } from 'next/server';
-import type { NextRequest } from 'next/server';
+// middleware.ts
+import createMiddleware from 'next-intl/middleware';
 
-const locales = ['de', 'en'] as const;
-const defaultLocale = 'de';
-
-export function middleware(req: NextRequest) {
-  const { pathname } = req.nextUrl;
-
-  // Statische Dateien & Next intern ausnehmen
-  if (pathname.startsWith('/_next') || pathname.includes('.')) return;
-
-  // Hat die URL bereits eine Locale?
-  const hasLocale = locales.some(
-    (l) => pathname === `/${l}` || pathname.startsWith(`/${l}/`)
-  );
-  if (hasLocale) return;
-
-  // Sonst auf Default-Locale umleiten (z. B. "/" -> "/de")
-  const url = req.nextUrl.clone();
-  url.pathname = `/${defaultLocale}${pathname}`;
-  return NextResponse.redirect(url);
-}
+export default createMiddleware({
+  locales: ['de', 'en'],
+  defaultLocale: 'de',
+  // optional: 'always' erzwingt /de /en Präfix
+  localePrefix: 'always'
+});
 
 export const config = {
-  matcher: ['/((?!api|_next|.*\\..*).*)'],
+  // alle Seiten, aber keine statischen Dateien/Next-Interna
+  matcher: ['/((?!api|_next|_vercel|.*\\..*).*)']
 };

@@ -4,6 +4,7 @@
       "nav": {
         "home": "Home",
         "pricing": "Pricing",
+        "news": "News",
         "blog": "Blog"
       },
       "cta": {
@@ -24,6 +25,62 @@
       "value2_text": "Clear, institutional-grade presentation.",
       "value3_title": "Fast start",
       "value3_text": "Ready for Vercel deployment and growth."
+    },
+    "pricing": {
+      "title": "Currently free",
+      "subtitle": "Handwerk.Cloud is in its build phase and freely accessible. A Pro tier is planned in 12–24 months.",
+      "free_badge": "Free",
+      "free_title": "Free for everyone (for now)",
+      "free_bullets": [
+        "Daily industry news and global construction projects",
+        "Short, neutral summaries (DE/EN)",
+        "Responsive layout, fast performance"
+      ],
+      "roadmap_title": "Planned Pro features (12–24 months)",
+      "roadmap_bullets": [
+        "Early access to projects & custom alerts",
+        "Region/trade filters, saved searches",
+        "Export/API & deeper analysis"
+      ],
+      "disclaimer": "Note: Timeline is indicative; features may change."
+    },
+    "legal": {
+      "imprint": {
+        "title": "Imprint",
+        "subtitle": "Information as required by German law (§ 5 TMG)",
+        "companyTitle": "Provider",
+        "contactTitle": "Contact",
+        "liabilityTitle": "Liability notice",
+        "liabilityText": "Despite careful content control, we assume no liability for external links. The content of linked pages is the sole responsibility of their operators."
+      },
+      "privacy": {
+        "title": "Privacy Policy",
+        "subtitle": "Information pursuant to GDPR (Art. 13/14)",
+        "controllerTitle": "Controller",
+        "controllerText": "Please add the name/company and contact details of the controller here.",
+        "dataTitle": "Processed data & purposes",
+        "dataText": "This site uses technically necessary data. Any additional tools (analytics/newsletter) will be documented here when used.",
+        "rightsTitle": "Your rights",
+        "rightsText": "You have the right of access, rectification, erasure, restriction of processing and to object."
+      }
+    },
+    "post": {
+      "ai_summary": "AI Summary",
+      "sources": "Sources",
+      "published": "Published",
+      "updated": "Updated",
+      "read_time": "{minutes} min read"
+    },
+    "news": {
+      "title": "News",
+      "tagline": "Latest construction & trades headlines — curated and concise.",
+      "none": "No news found.",
+      "filters": "Filters",
+      "clear": "Reset",
+      "latest": "Latest news",
+      "popular_topics": "Popular topics",
+      "top_sources": "Top sources",
+      "subscribe": "Subscribe to newsletter"
     }
   }
   
