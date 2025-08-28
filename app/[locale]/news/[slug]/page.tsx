@@ -80,7 +80,7 @@ export default async function NewsItem({
   const host = h.get('host') || 'localhost:3000';
   const base = `${proto}://${host}`.replace(/\/$/, '');
   const url = `${base}/${locale}/news/${item.meta.slug}`;
-  const ld: Record<string, any> = {
+  const ld: Record<string, unknown> = {
     '@context': 'https://schema.org',
     '@type': 'NewsArticle',
     headline: item.meta.title,
