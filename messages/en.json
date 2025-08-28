@@ -1,0 +1,29 @@
+{
+    "common": {
+      "brand": "Handwerk.Cloud",
+      "nav": {
+        "home": "Home",
+        "pricing": "Pricing",
+        "blog": "Blog"
+      },
+      "cta": {
+        "primary": "Start free",
+        "secondary": "Learn more"
+      },
+      "footer": {
+        "imprint": "Imprint",
+        "privacy": "Privacy"
+      }
+    },
+    "home": {
+      "headline": "Handwerk.Cloud",
+      "tagline": "Your daily snapshot for trades.",
+      "value1_title": "Relevant industry news",
+      "value1_text": "Curated daily, summarized neutrally.",
+      "value2_title": "Clean structure",
+      "value2_text": "Clear, institutional-grade presentation.",
+      "value3_title": "Fast start",
+      "value3_text": "Ready for Vercel deployment and growth."
+    }
+  }
+  

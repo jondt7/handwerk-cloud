@@ -1,0 +1,29 @@
+{
+    "common": {
+      "brand": "Handwerk.Cloud",
+      "nav": {
+        "home": "Start",
+        "pricing": "Preise",
+        "blog": "Blog"
+      },
+      "cta": {
+        "primary": "Kostenlos starten",
+        "secondary": "Mehr erfahren"
+      },
+      "footer": {
+        "imprint": "Impressum",
+        "privacy": "Datenschutz"
+      }
+    },
+    "home": {
+      "headline": "Handwerk.Cloud",
+      "tagline": "Ihr täglicher Überblick für Betriebe.",
+      "value1_title": "Relevante Branchennews",
+      "value1_text": "Täglich kuratiert, neutral zusammengefasst.",
+      "value2_title": "Saubere Struktur",
+      "value2_text": "Klarer Aufbau im Stil von institutionellen Websites.",
+      "value3_title": "Schneller Start",
+      "value3_text": "Bereit für Vercel-Deployment und Wachstum."
+    }
+  }
+  
